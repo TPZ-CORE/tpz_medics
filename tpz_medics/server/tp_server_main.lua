@@ -131,19 +131,23 @@ Citizen.CreateThread(function()
 
     if GetTableLength(Players) > 0 then
 
-      for index, actionValue in pairs (Players) do
+      for index, player in pairs (Players) do
 
-        if actionValue.cooldown > 0 then
+        for type, actionValue in pairs (player) do
 
-          actionValue.cooldown = actionValue.cooldown - 1
+            if actionValue.cooldown > 0 then
 
-          if actionValue.cooldown <= 0 then
-            actionValue.cooldown = 0
+                actionValue.cooldown = actionValue.cooldown - 1
+
+                if actionValue.cooldown <= 0 then
+                    actionValue.cooldown = 0
+                end
+
+            end
+
           end
 
         end
-
-      end
 
     end
 
