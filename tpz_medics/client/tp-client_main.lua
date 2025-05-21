@@ -117,8 +117,6 @@ Citizen.CreateThread(function()
                                 PlayerData.IsBusy = true
                                 TaskStandStill(player, -1)
     
-                                Citizen.InvokeNative(0x5AD23D40115353AC, player, PlayerData.ClosestDoctorNPC, -1) -- TaskTurnPedToFaceEntity
-    
                                 TriggerServerEvent("tpz_medics:server:action", index, "WOUNDS")
                            
                             else
@@ -138,8 +136,6 @@ Citizen.CreateThread(function()
                             if isDead then
                                 PlayerData.IsBusy = true
                                 TaskStandStill(player, -1)
-    
-                                Citizen.InvokeNative(0x5AD23D40115353AC, player, PlayerData.ClosestDoctorNPC, -1) -- TaskTurnPedToFaceEntity
     
                                 TriggerServerEvent("tpz_medics:server:action", index, "FULL")
 
