@@ -6,6 +6,24 @@ local Players = {}
 --[[ Functions  ]]--
 -----------------------------------------------------------
 
+local function GetTableLength(T)
+    local count = 0
+    for _ in pairs(T) do count = count + 1 end
+    return count
+end
+-----------------------------------------------------------
+--[[ Base Events  ]]--
+-----------------------------------------------------------
+
+AddEventHandler('onResourceStop', function(resourceName)
+    if (GetCurrentResourceName() ~= resourceName) then
+      return
+    end
+
+    Players = nil
+
+end)
+
 -----------------------------------------------------------
 --[[ Events  ]]--
 -----------------------------------------------------------
@@ -112,15 +130,18 @@ Citizen.CreateThread(function()
 
     Wait(1000)
 
-    for index, actionValue in pairs (Players) do
+    if GetTableLength(Players) > 0 then
 
-      if actionValue.cooldown > 0 then
+      for index, actionValue in pairs (Players) do
 
-        actionValue.cooldown = actionValue.cooldown - 1
+        if actionValue.cooldown > 0 then
 
-        print(actionValue.action, actionValue.cooldown)
-        if actionValue.cooldown <= 0 then
-          actionValue.cooldown = 0
+          actionValue.cooldown = actionValue.cooldown - 1
+
+          if actionValue.cooldown <= 0 then
+            actionValue.cooldown = 0
+          end
+
         end
 
       end
