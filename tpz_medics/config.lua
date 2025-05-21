@@ -178,7 +178,7 @@ Config.UsableItems = {
         -- @RequiredPlayerTarget must be true.
         RequiredUnconsiousPlayerTarget = true,
 
-        Jobs = { 'medics' }, -- Set to false if you don't want this item to be used only for jobs.
+        Jobs = { 'medic', 'doctor' }, -- Set to false if you don't want this item to be used only for jobs.
 
     },
 }
