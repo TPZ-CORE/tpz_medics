@@ -105,8 +105,13 @@ AddEventHandler("tpz_medics:server:action_full", function(id)
     return
   end
 
-  if Players[charIdentifier] and Players[charIdentifier]['FULL'] and Players[charIdentifier]['FULL'].cooldown ~= 0 then -- Cooldown
+    if Players[charIdentifier] == nil then
+        Players[charIdentifier] = {}
+        Players[charIdentifier]['WOUNDS'] = { cooldown = 0, action = 'WOUNDS'} -- WOUNDS
+        Players[charIdentifier]['FULL']   = { cooldown = 0, action = 'FULL'} -- FULL (REVIVE)
+     end
 
+  if Players[charIdentifier] and Players[charIdentifier]['FULL'] and Players[charIdentifier]['FULL'].cooldown ~= 0 then -- Cooldown
     if id ~= nil then
       SendNotification(_source, string.format(Locales['TARGET_ACTION_ON_COOLDOWN'], Players[charIdentifier]['FULL']))
     end
