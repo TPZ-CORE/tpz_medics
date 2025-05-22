@@ -10,4 +10,10 @@ shared_scripts { 'config.lua', 'locales.lua' }
 server_scripts { 'server/*.lua' }
 client_scripts { 'client/*.lua' }
 
+dependencies {
+    'tpz_core',
+    'tpz_characters',
+    'tpz_inventory',
+}
+
 lua54 'yes'
