@@ -3,8 +3,6 @@ Locales = {}
 Locales = {
 
     ['PROMPT_ACTION']              = "Press",
-    ['TELEGRAM_ID_DOES_NOT_EXIST'] = "The selected telegram id does not exist",
-    ['TELEGRAM_HAS_BEEN_DELETED']  = "The selected telegram has been successfully deleted.",
 
     ['NOT_CLOSE_FOR_ACTION']       = "~e~You have to be closer to the doctor to perform this action.",
     ['NOT_DEAD']                   = "~e~You are not unconscious for this kind of medical treatment.",
@@ -21,12 +19,4 @@ Locales = {
     ['ACTION_ON_COOLDOWN']         = "You can't perform this action for another %s minute-s.",
 
     ['NOT_REQUIRED_JOB']           = "~e~You don't have the required job.",
-
-    ['RECEIVED_MAIL'] = {
-        title = "Mailbox", 
-        message = "You have received a telegram.",
-        icon = "mail",
-        duration = 10
-    },
-
 }
