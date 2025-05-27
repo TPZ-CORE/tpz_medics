@@ -1,3 +1,5 @@
+local TPZ = exports.tpz_core:getCoreAPI()
+
 -----------------------------------------------------------
 --[[ Events ]]--
 -----------------------------------------------------------
@@ -29,9 +31,9 @@ AddEventHandler('tpz_medics:client:use', function(itemName)
     -- We check if the specified item requires a player target to be used.
     if itemData.RequiredPlayerTarget then
 
-        local nearestPlayers = GetNearestPlayers(Config.CheckNearestPlayersForRevive)
+        local nearestPlayers = TPZ.GetNearestPlayers(Config.CheckNearestPlayersForRevive)
 
-        if GetTableLength(nearestPlayers) > 0 then
+        if TPZ.GetTableLength(nearestPlayers) > 0 then
 
             local targetPlayer    = nearestPlayers[1] -- We get the first result.
             local targetPlayerPed = GetPlayerPed(targetPlayer)
