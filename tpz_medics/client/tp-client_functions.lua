@@ -124,32 +124,3 @@ DrawText3D = function(x, y, z, text)
 	  DrawSprite("feeds", "hud_menu_4a", _x, _y+0.0125,0.015+ factor, 0.03, 0.1, 35, 35, 35, 190, 0)
 	end
 end
-
-GetNearestPlayers = function(distance)
-	local closestDistance = distance
-	local playerPed = PlayerPedId()
-	local coords = GetEntityCoords(playerPed, true, true)
-	local closestPlayers = {}
-
-	for _, player in pairs(GetActivePlayers()) do
-		local target = GetPlayerPed(player)
-
-		if target ~= playerPed then
-			local targetCoords = GetEntityCoords(target, true, true)
-			local distance = #(targetCoords - coords)
-
-			if distance < closestDistance then
-				table.insert(closestPlayers, player)
-			end
-		end
-	end
-	return closestPlayers
-end
-
--- @GetTableLength returns the length of a table.
-function GetTableLength(T)
-    local count = 0
-    for _ in pairs(T) do count = count + 1 end
-    return count
-end
-
