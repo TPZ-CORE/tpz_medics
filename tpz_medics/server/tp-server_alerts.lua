@@ -110,9 +110,9 @@ AddEventHandler("tpz_medics:server:sign_alert", function(targetDate)
     local _source    = source
     local xPlayer    = TPZ.GetPlayer(_source)
 
-    local firstname  = toProperCase(xPlayer.getFirstName())
-    local lastname   = toProperCase(xPlayer.getLastName())
-    local fullname   = firstname .. " " .. lastname
+    local firstname  = xPlayer.getFirstName()
+    local lastname   = xPlayer.getLastName()
+    local fullname   = toProperCase(firstname .. " " .. lastname)
 
     local isSignedAlready = false 
 
