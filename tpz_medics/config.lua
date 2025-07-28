@@ -23,10 +23,15 @@ Config.NPCApplyDuration = {
 
 Config.CheckNearestPlayersForRevive = 1.5 -- The distance to check when using a revive item near players who are unconscious.
 
--- When a player alerts for help (revive).
--- @param Jobs : The jobs to send the alert notification. 
--- @param Duration : Time in seconds. 
-Config.NotifyAlert = { Jobs = { "medic" }, Duration = 5 }
+-- Would you let the players to alert medics anytime when they are alive? 
+-- @param Command : The command name to be executed for alerting medics. 
+-- @param Duration : Time in seconds (to execute command again - every 10 minutes by default).
+Config.CommandToAlert = { Enabled = true, Command = "alert", Duration = 600 }
+
+Config.NotifyAlertDuration = 5 -- Time in seconds. 
+
+-- The jobs to send the alert notifications either from command or when unconsious. 
+Config.AlertJobs = { "medic" } 
 
 -----------------------------------------------------------
 --[[ Usable Items  ]]--
