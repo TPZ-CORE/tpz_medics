@@ -87,8 +87,8 @@ AddEventHandler("tpz_medics:server:alert", function()
     TPZ.TriggerClientEventByJobs("tpz_medics:client:update_alerts", { actionType = "INSERT", data = insert_data }, Config.Jobs) 
 
     if Config.Webhooks['ALERTS'].Enabled then
-		local title   = "🚑`New Unconsious Alert`"
-		local message = string.format("The player with the online player id: `%s` and fullname as: `%s` is unconsious and sent an alert requesting for medical assistance.\n\n**Coordinates (X,Y,Z):** `%s`", _source, fullname, coords.x .. " " .. coords.y .. " " .. coords.z)
+		local title   = "🚑`New Alert`"
+		local message = string.format("The player with the online player id: `%s` and fullname as: `%s` is sent an alert requesting for medical assistance.\n\n**Coordinates (X,Y,Z):** `%s`", _source, fullname, coords.x .. " " .. coords.y .. " " .. coords.z)
 		
 		TPZ.SendToDiscord(Config.Webhooks['ALERTS'].Url, title, message, Config.Webhooks['ALERTS'].Color)
 	end
