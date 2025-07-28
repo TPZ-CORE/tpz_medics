@@ -302,7 +302,7 @@ Config.Webhooks = {
         Color  = 10038562
     },
 
-    ["ALERTS"] = {
+    ["ALERTS"] = { -- You can use a webhook which allows your medics to see the alerts from discord. 
         Enabled = false, 
         Url    = "", 
         Color  = 10038562
