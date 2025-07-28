@@ -1,29 +1,5 @@
 local TPZ = exports.tpz_core:getCoreAPI()
 
-local AlertArchives = {}
-
------------------------------------------------------------
---[[ Local Functions ]]--
------------------------------------------------------------
-
-local function toProperCase(str)
-    return str:lower():gsub("(%a)(%w*)", function(first, rest)
-        return first:upper() .. rest
-    end)
-end
-
------------------------------------------------------------
---[[ Base Events ]]--
------------------------------------------------------------
-
-AddEventHandler('onResourceStop', function(resourceName)
-    if (GetCurrentResourceName() ~= resourceName) then
-      return
-    end
-
-    AlertArchives = nil
-end)
-
 -----------------------------------------------------------
 --[[ General Events ]]--
 -----------------------------------------------------------
@@ -54,12 +30,12 @@ AddEventHandler("tpz_medics:server:request_alerts", function()
         return
     end
 
-    TriggerClientEvent("tpz_medics:client:update_alerts", _source, { actionType = "REQUEST", data = AlertArchives })
+    TriggerClientEvent("tpz_alerts:client:update_alerts", _source, { actionType = "REQUEST", data = AlertArchives })
 
 end)
 
 RegisterServerEvent("tpz_medics:server:alert")
-AddEventHandler("tpz_medics:server:alert", function(unconscious, description)
+AddEventHandler("tpz_medics:server:alert", function(unconscious)
     local _source = source
     local xPlayer = TPZ.GetPlayer(_source)
     
@@ -72,36 +48,19 @@ AddEventHandler("tpz_medics:server:alert", function(unconscious, description)
     local fullname            = xPlayer.getFirstName() .. " " .. xPlayer.getLastName()
     local steamName           = GetPlayerName(_source)
 
-    local currentTime = os.date("*t") -- Get current date and time as a table
-    -- Modify only the year
-    currentTime.year = Config.Year
+    local ped                 = GetPlayerPed(_source)
+    local coords              = GetEntityCoords(ped)
 
-    -- Get the new timestamp with modified year
-    local modifiedTimestamp = os.time(currentTime)
-    local formatted_date = os.date("%d/%m/%Y %H:%M:%S", modifiedTimestamp)
+    if Config.tpz_alerts then
 
-    local ped = GetPlayerPed(_source)
-    local coords = GetEntityCoords(ped)
+        for index, job in pairs (Config.Jobs) do
+            exports.tpz_alerts:getAPI().createNewAlert(_source, job, Locales[""])
+        end
 
-    if unconscious then
-        description = Locales["UNCONSCIOUS_ALERT_DESCRIPTION"]
     end
 
-    local insert_data = { 
-        fullname    = fullname,
-        source      = _source,
-        description = description,
-        coords      = coords,
-        signed      = 0,
-        date        = formatted_date, 
-    } 
-
-    if Config.PigeonAlerts.Enabled then
-        table.insert(AlertArchives, insert_data)
-    end
-
-    -- update on jobs only. 
-    TPZ.TriggerClientEventByJobs("tpz_medics:client:update_alerts", { actionType = "INSERT", data = insert_data }, Config.Jobs) 
+    -- update on jobs only (for blips)
+    TPZ.TriggerClientEventByJobs("tpz_medics:client:alert", { coords }, Config.Jobs) 
 
     if Config.Webhooks['ALERTS'].Enabled then
 		local title   = "🚑`New Alert`"
