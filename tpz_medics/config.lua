@@ -36,7 +36,7 @@ Config.Jobs = { "medic" }
 
 -- A command based on @Config.Jobs for reading all the in-game alerts
 -- route and also sign when help had been provided by a doctor. 
-Config.AlertsCommand = "alerts"
+Config.CommandToReadAlerts = "alerts"
 
 -----------------------------------------------------------
 --[[ Usable Items  ]]--
