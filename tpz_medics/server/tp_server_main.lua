@@ -1,6 +1,7 @@
 local TPZ = exports.tpz_core:getCoreAPI()
 
-local Players = {}
+local Players      = {}
+local AlertArchives = {}
 
 -----------------------------------------------------------
 --[[ Functions  ]]--
@@ -21,7 +22,7 @@ AddEventHandler('onResourceStop', function(resourceName)
     end
 
     Players = nil
-
+    AlertArchives = nil
 end)
 
 -----------------------------------------------------------
@@ -121,17 +122,32 @@ end)
 
 RegisterServerEvent("tpz_medics:server:alert")
 AddEventHandler("tpz_medics:server:alert", function()
-    local _source = source
-    local xPlayer = TPZ.GetPlayer(_source)
-    local fullname = xPlayer.getFirstName() .. " " .. xPlayer.getLastName()
-
+    local _source            = source
+    local xPlayer            = TPZ.GetPlayer(_source)
+    
     if not xPlayer.loaded() then
         return
     end
 
-    
+    local identifier          = xPlayer.getIdentifier()
+    local characterIdentifier = xPlayer.getCharacterIdentifier()
+    local fullname            = xPlayer.getFirstName() .. " " .. xPlayer.getLastName()
+    local steamName           = GetPlayerName(_source)
 
-    -- todo
+    local currentTime = os.date("*t") -- Get current date and time as a table
+    -- Modify only the year
+    currentTime.year = Config.Year
+
+    -- Get the new timestamp with modified year
+    local modifiedTimestamp = os.time(currentTime)
+    local formatted_date = os.date("%d/%m/%Y %H:%M:%S", modifiedTimestamp)
+
+    table.insert(AlertArchives, { 
+        fullname = fullname,
+        source   = _source,
+        signed   = 0,
+        date     = formatted_date, 
+    } 
 
 end)
 
