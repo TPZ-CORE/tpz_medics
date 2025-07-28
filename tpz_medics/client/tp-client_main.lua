@@ -58,6 +58,23 @@ end
 RegisterNetEvent("tpz_core:getPlayerJob")
 AddEventHandler("tpz_core:getPlayerJob", function(data)
     PlayerData.Job = data.job
+
+    local isPermitted = false
+
+    for index, job in pairs (Config.Jobs) do
+
+        if job == PlayerData.Job then
+            isPermitted = true
+        end
+
+    end
+
+    if not isPermitted then
+        return
+    end
+
+    TriggerServerEvent("tpz_medics:server:request_alerts")
+
 end)
 
 -----------------------------------------------------------
