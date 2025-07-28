@@ -114,15 +114,27 @@ AddEventHandler("tpz_medics:server:sign_alert", function(targetDate)
     local lastname   = toProperCase(xPlayer.getLastName())
     local fullname   = firstname .. " " .. lastname
 
+    local isSignedAlready = false 
+
     for index, archive in pairs(AlertArchives) do
 
         if archive.date == targetDate then
-            archive.signed = fullname
+
+            if archive.signed == 0 then
+                archive.signed = fullname
+            else
+                isSignedAlready = true
+            end
+
         end
 
     end
 
-    TPZ.TriggerClientEventByJobs("tpz_medics:client:update_alerts", { actionType = "SET_SIGNED", data = { fullname, targetDate }, Config.Jobs) 
+    if not isSignedAlready then
+        TPZ.TriggerClientEventByJobs("tpz_medics:client:update_alerts", { actionType = "SET_SIGNED", data = { fullname, targetDate }, Config.Jobs) 
+    else
+        TriggerClientEvent("tpz_medics:client:alerts_nui_notify", Locales["ARCHIVE_ALERT_ALREADY_SIGNED"], "error")
+    end
 
 end)
 
