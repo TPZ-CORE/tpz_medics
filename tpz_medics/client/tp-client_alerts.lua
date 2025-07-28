@@ -37,7 +37,7 @@ RegisterCommand(Config.CommandToReadAlerts, function(source, args, rawCommand)
 
     if isPermitted then
 
-        OpenMedicalAlertArchives()
+        --OpenMedicalAlertArchives()
 
     else
         SendNotification(nil, Locales["NOT_REQUIRED_JOB"], "error")
