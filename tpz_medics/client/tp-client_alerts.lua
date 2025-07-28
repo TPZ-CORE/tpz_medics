@@ -32,6 +32,16 @@ end)
 --[[ Commands ]]--
 -----------------------------------------------------------
 
+if Config.CommandToAlert.Enabled then
+
+    RegisterCommand(Config.CommandToAlert.Command, function(source, args, rawCommand)
+
+
+    end)
+
+end
+
+
 RegisterCommand(Config.CommandToReadAlerts, function(source, args, rawCommand)
     local PlayerData = GetPlayerData()
 
