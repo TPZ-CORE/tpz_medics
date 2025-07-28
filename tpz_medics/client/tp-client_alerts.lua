@@ -28,7 +28,13 @@ AddEventHandler("tpz_medics:client:update_alerts", function(cb)
         AlertArchives = data[1]
 
     elseif actionType == "INSERT" then
-        table.insert(AlertArchives, data)
+
+        if Config.PigeonAlerts.Enabled then
+            table.insert(AlertArchives, data)
+        end
+        -- create blip
+        -- Wait()
+        -- RemoveBlip
 
     elseif actionType == "SET_SIGNED" then
         
