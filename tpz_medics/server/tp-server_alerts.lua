@@ -62,6 +62,8 @@ AddEventHandler("tpz_medics:server:alert", function(unconscious)
     -- update on jobs only (for blips)
     TPZ.TriggerClientEventByJobs("tpz_medics:client:alert", { coords }, Config.Jobs) 
 
+    -- tpz_notify
+
     if Config.Webhooks['ALERTS'].Enabled then
 		local title   = "🚑`New Alert`"
 		local message = string.format("The player with the online player id: `%s` and fullname as: `%s` is sent an alert requesting for medical assistance.\n\n**Description:** `%s`\n\n**Coordinates (X,Y,Z):** `%s`", _source, fullname, description, coords.x .. " " .. coords.y .. " " .. coords.z)
