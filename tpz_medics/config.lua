@@ -21,6 +21,11 @@ Config.NPCApplyDuration = {
 
 Config.CheckNearestPlayersForRevive = 1.5 -- The distance to check when using a revive item near players who are unconscious.
 
+-- When a player alerts for help (revive).
+-- @param Jobs : The jobs to send the alert notification. 
+-- @param Duration : Time in seconds. 
+Config.NotifyAlert = { Jobs = { "medic" }, Duration = 5 }
+
 ---------------------------------------------------------------
 --[[ Discord Webhooking ]]--
 ---------------------------------------------------------------
