@@ -80,6 +80,7 @@ AddEventHandler("tpz_medics:server:alert", function(unconscious)
 
     if not availableMedics then
         -- spawn npc
+        TriggerClientEvent("tpz_medics:client:start_npc_assistance", _source)
     end
 
     if Config.Webhooks['ALERTS'].Enabled then
