@@ -68,16 +68,15 @@ AddEventHandler("tpz_medics:server:alert", function()
 
     -- Get the new timestamp with modified year
     local modifiedTimestamp = os.time(currentTime)
-    local formatted_date    = os.date("%d/%m/%Y %H:%M:%S", modifiedTimestamp)
+    local formatted_date = os.date("%d/%m/%Y %H:%M:%S", modifiedTimestamp)
 
-    local ped               = GetPlayerPed(_source)
-    local playerCoords      = GetEntityCoords(ped)
+    local ped = GetPlayerPed(_source)
+    local coords = GetEntityCoords(ped)
             
-    
     local insert_data = { 
         fullname = fullname,
         source   = _source,
-        coords   = playerCoords,
+        coords   = coords,
         signed   = 0,
         date     = formatted_date, 
     } 
@@ -89,7 +88,7 @@ AddEventHandler("tpz_medics:server:alert", function()
 
     if Config.Webhooks['ALERTS'].Enabled then
 		local title   = "🚑`New Unconsious Alert`"
-		local message = string.format("The player with the online player id: `%s` and fullname as: `%s` is unconsious and sent an alert requesting for medical assistance.", _source, fullname)
+		local message = string.format("The player with the online player id: `%s` and fullname as: `%s` is unconsious and sent an alert requesting for medical assistance.\n\n**Coordinates (X,Y,Z):** `%s`", _source, fullname, coords.x .. " " .. coords.y .. " " .. coords.z)
 		
 		TPZ.SendToDiscord(Config.Webhooks['ALERTS'].Url, title, message, Config.Webhooks['ALERTS'].Color)
 	end
