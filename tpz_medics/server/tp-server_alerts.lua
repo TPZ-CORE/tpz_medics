@@ -64,6 +64,27 @@ AddEventHandler("tpz_medics:server:alert", function(unconscious)
 
     -- tpz_notify
 
+    if not Config.tpz_alerts then
+
+        for index, job in pairs (Config.Jobs) do
+            local jobList = TPZ.GetJobPlayers(job)
+    
+            if jobList.count > 0 then
+    
+                for _, player in pairs (jobList.players) do
+    
+                    player.source = tonumber(player.source)
+    
+                    --TriggerClientEvent("tpz_notify:sendNotification", title, message, actionType, notifyType, duration, "left")
+    
+                end
+    
+            end
+    
+        end
+
+    end
+
     if Config.Webhooks['ALERTS'].Enabled then
 		local title   = "🚑`New Alert`"
 		local message = string.format("The player with the online player id: `%s` and fullname as: `%s` is sent an alert requesting for medical assistance.\n\n**Description:** `%s`\n\n**Coordinates (X,Y,Z):** `%s`", _source, fullname, description, coords.x .. " " .. coords.y .. " " .. coords.z)
