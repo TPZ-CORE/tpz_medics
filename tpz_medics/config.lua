@@ -32,7 +32,11 @@ Config.NotifyAlertDuration = 5 -- Time in seconds.
 
 -- The jobs to receive the alert notifications and alert archives
 -- either from command or when a player is unconsious. 
-Config.AlertJobs = { "medic" } 
+Config.Jobs = { "medic" } 
+
+-- A command based on @Config.Jobs for reading all the in-game alerts
+-- route and also sign when help had been provided by a doctor. 
+Config.AlertsCommand = "alerts"
 
 -----------------------------------------------------------
 --[[ Usable Items  ]]--
