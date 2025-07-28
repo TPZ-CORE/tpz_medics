@@ -4,6 +4,13 @@ Config.DevMode = false
 
 Config.Keys = { ['WOUNDS'] = 0xD9D0E1C0, ['FULL'] = 0x760A9C6F }
 
+-- The following is only when a notification sent while NUI is open (It has its own notification system).
+Config.NotificationColors = {
+    ['error']   = "rgba(255, 0, 0, 0.79)",
+    ['success'] = "rgba(0, 255, 0, 0.79)",
+    ['info']    = "rgba(0, 0, 255, 0.79)"
+}
+
 ---------------------------------------------------------------
 --[[ General Settings ]]--
 ---------------------------------------------------------------
