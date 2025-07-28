@@ -119,6 +119,19 @@ AddEventHandler("tpz_medics:server:action_full", function(id)
   TriggerClientEvent('tpz_core:resurrectPlayer', _tsource, true)
 end)
 
+RegisterServerEvent("tpz_medics:server:alert")
+AddEventHandler("tpz_medics:server:alert", function()
+    local _source        = source
+    local xPlayer        = TPZ.GetPlayer(_source)
+
+    if not xPlayer.loaded() then
+        return
+    end
+
+    -- todo
+
+end)
+
 -----------------------------------------------------------
 --[[ Threads  ]]--
 -----------------------------------------------------------
