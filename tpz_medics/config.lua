@@ -30,7 +30,8 @@ Config.CommandToAlert = { Enabled = true, Command = "alert", Duration = 600 }
 
 Config.NotifyAlertDuration = 5 -- Time in seconds. 
 
--- The jobs to send the alert notifications either from command or when unconsious. 
+-- The jobs to receive the alert notifications and alert archives
+-- either from command or when a player is unconsious. 
 Config.AlertJobs = { "medic" } 
 
 -----------------------------------------------------------
