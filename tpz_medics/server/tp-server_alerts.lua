@@ -49,28 +49,37 @@ AddEventHandler("tpz_medics:server:alert", function(unconscious)
     -- update on jobs only (for blips)
     TPZ.TriggerClientEventByJobs("tpz_medics:client:alert", { coords }, Config.Jobs) 
 
+    local availableMedics = false
+
     for index, job in pairs (Config.Jobs) do
+
+        local jobList = TPZ.GetJobPlayers(job)
+        
+        if jobList.count > 0 then
+            availableMedics = true
+        end
 
         if not Config.tpz_alerts then
 
-            local jobList = TPZ.GetJobPlayers(job)
-    
             if jobList.count > 0 then
-    
+
                 for _, player in pairs (jobList.players) do
     
                     player.source = tonumber(player.source)
-    
+
                     TriggerClientEvent("tpz_notify:sendNotification", player.source, Locales["ALERT_TITLE"], Locales["ALERT_DESCRIPTION"], "medical", "info", Config.NotifyAlertDuration, "left")
-    
                 end
-    
+
             end
 
         else
             exports.tpz_alerts:getAPI().createNewAlert(_source, job, Locales["UNCONSCIOUS_ALERT_DESC"])
         end
 
+    end
+
+    if not availableMedics then
+        -- spawn npc
     end
 
     if Config.Webhooks['ALERTS'].Enabled then
