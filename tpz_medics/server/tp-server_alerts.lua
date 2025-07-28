@@ -54,7 +54,7 @@ AddEventHandler("tpz_medics:server:alert", function(unconscious)
     if Config.tpz_alerts then
 
         for index, job in pairs (Config.Jobs) do
-            exports.tpz_alerts:getAPI().createNewAlert(_source, job, Locales[""])
+            exports.tpz_alerts:getAPI().createNewAlert(_source, job, Locales["UNCONSCIOUS_ALERT_DESC"])
         end
 
     end
@@ -70,37 +70,3 @@ AddEventHandler("tpz_medics:server:alert", function(unconscious)
 	end
 
 end)
-
-RegisterServerEvent("tpz_medics:server:sign_alert")
-AddEventHandler("tpz_medics:server:sign_alert", function(targetDate)
-    local _source    = source
-    local xPlayer    = TPZ.GetPlayer(_source)
-
-    local firstname  = xPlayer.getFirstName()
-    local lastname   = xPlayer.getLastName()
-    local fullname   = toProperCase(firstname .. " " .. lastname)
-
-    local isSignedAlready = false 
-
-    for index, archive in pairs(AlertArchives) do
-
-        if archive.date == targetDate then
-
-            if archive.signed == 0 then
-                archive.signed = fullname
-            else
-                isSignedAlready = true
-            end
-
-        end
-
-    end
-
-    if not isSignedAlready then
-        TPZ.TriggerClientEventByJobs("tpz_medics:client:update_alerts", { actionType = "SET_SIGNED", data = { fullname, targetDate }, Config.Jobs) 
-    else
-        TriggerClientEvent("tpz_medics:client:alerts_nui_notify", Locales["ARCHIVE_ALERT_ALREADY_SIGNED"], "error")
-    end
-
-end)
-
