@@ -1,4 +1,20 @@
 local AlertArchives = {}
+local HasNUIActive  = false
+
+-----------------------------------------------------------
+--[[ Local Functions ]]--
+-----------------------------------------------------------
+
+local SendNUINotification = function(message, notificationType)
+
+    local PlayerData = GetPlayerData()
+
+    if PlayerData.HasNUIActive then
+		local notify_color = Config.NotificationColors[notificationType]
+		SendNUIMessage({ action = 'sendNotification', notification_data = {message = message, type = notificationType, color = notify_color} })
+	end
+
+end
 
 -----------------------------------------------------------
 --[[ General Events ]]--
@@ -28,6 +44,12 @@ AddEventHandler("tpz_medics:client:update_alerts", function(cb)
 
     end
 
+end)
+
+
+RegisterNetEvent("tpz_medics:client:alerts_nui_notify")
+AddEventHandler("tpz_medics:client:alerts_nui_notify", function(message, actionType)
+    SendNUINotification(message, actionType)
 end)
 
 -----------------------------------------------------------
