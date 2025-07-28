@@ -8,6 +8,8 @@ Config.Keys = { ['WOUNDS'] = 0xD9D0E1C0, ['FULL'] = 0x760A9C6F }
 --[[ General Settings ]]--
 ---------------------------------------------------------------
 
+Config.Year = 1890 
+
 -- NPC Rendering Distance which is deleting the npc when being away from the locations.
 Config.NPCRenderingDistance = 30.0
 
