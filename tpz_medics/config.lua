@@ -4,18 +4,9 @@ Config.DevMode = false
 
 Config.Keys = { ['WOUNDS'] = 0xD9D0E1C0, ['FULL'] = 0x760A9C6F }
 
--- The following is only when a notification sent while NUI is open (It has its own notification system).
-Config.NotificationColors = {
-    ['error']   = "rgba(255, 0, 0, 0.79)",
-    ['success'] = "rgba(0, 255, 0, 0.79)",
-    ['info']    = "rgba(0, 0, 255, 0.79)"
-}
-
 ---------------------------------------------------------------
 --[[ General Settings ]]--
 ---------------------------------------------------------------
-
-Config.Year = 1890 
 
 -- NPC Rendering Distance which is deleting the npc when being away from the locations.
 Config.NPCRenderingDistance = 30.0
@@ -32,29 +23,21 @@ Config.CheckNearestPlayersForRevive = 1.5 -- The distance to check when using a 
 
 Config.NotifyAlertDuration = 5 -- Time in seconds. 
 
--- Set @Enabled to true if you want the players to send alert notes through pigeons.
--- If true, doctors will also be able to read the alerts anytime by a command.  
-Config.PigeonAlerts = { 
-    Enabled = true, 
-
-    -- The command to call a pigeon for sending an alert note. 
-    CommandToCall = "callpigeon", 
-    
-    -- The duration (in seconds) for sending an alert note again. 
-    Duration = 600,
-
-    -- A command based on @Config.Jobs for reading all the in-game alerts
-    -- that have been sent by a pigeon. you can also route and sign when 
-    -- assistance has been provided by a doctor. 
-    CommandToReadPigeonAlerts = "alerts",
-
-    -- The cost for purchasing a pigeon (only once).
-    PigeonCost = { item = false, account = "cash", amount = 50 },
-}
-
--- The jobs to receive the alert notifications and alert archives
--- either from command or when a player is unconsious. 
+-- The jobs to receive the alert notifications and also check for players availability. 
 Config.Jobs = { "medic" } 
+
+-- @MedicNPCData is an extra feature to allow an NPC to revive an unconscious player when there are no
+-- players with @Config.Jobs available on the server.
+Config.MedicNPCData = {
+    Enabled       = true,
+
+    Model         = "CS_DrMalcolmMacIntosh",
+    AnimationDict = "mech_revive@unapproved",
+    AnimationBody = "revive",
+
+    -- @param account : 0: CASH, 1: GOLD, 2: BLACK MONEY
+    ReviveCost    = { account = 0, amount = 5 },
+}
 
 -----------------------------------------------------------
 --[[ Usable Items  ]]--
