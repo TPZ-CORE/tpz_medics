@@ -122,8 +122,8 @@ end)
 
 RegisterServerEvent("tpz_medics:server:alert")
 AddEventHandler("tpz_medics:server:alert", function()
-    local _source            = source
-    local xPlayer            = TPZ.GetPlayer(_source)
+    local _source = source
+    local xPlayer = TPZ.GetPlayer(_source)
     
     if not xPlayer.loaded() then
         return
@@ -140,11 +140,15 @@ AddEventHandler("tpz_medics:server:alert", function()
 
     -- Get the new timestamp with modified year
     local modifiedTimestamp = os.time(currentTime)
-    local formatted_date = os.date("%d/%m/%Y %H:%M:%S", modifiedTimestamp)
+    local formatted_date    = os.date("%d/%m/%Y %H:%M:%S", modifiedTimestamp)
 
+    local ped               = GetPlayerPed(_source)
+    local playerCoords      = GetEntityCoords(ped)
+            
     table.insert(AlertArchives, { 
         fullname = fullname,
         source   = _source,
+        coords   = playerCoords,
         signed   = 0,
         date     = formatted_date, 
     } 
