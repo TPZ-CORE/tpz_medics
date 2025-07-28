@@ -3,7 +3,17 @@ local TPZ = exports.tpz_core:getCoreAPI()
 local AlertArchives = {}
 
 -----------------------------------------------------------
---[[ Base Events  ]]--
+--[[ Local Functions ]]--
+-----------------------------------------------------------
+
+local function toProperCase(str)
+    return str:lower():gsub("(%a)(%w*)", function(first, rest)
+        return first:upper() .. rest
+    end)
+end
+
+-----------------------------------------------------------
+--[[ Base Events ]]--
 -----------------------------------------------------------
 
 AddEventHandler('onResourceStop', function(resourceName)
@@ -15,7 +25,7 @@ AddEventHandler('onResourceStop', function(resourceName)
 end)
 
 -----------------------------------------------------------
---[[ General Events  ]]--
+--[[ General Events ]]--
 -----------------------------------------------------------
 
 RegisterServerEvent("tpz_medics:server:request_alerts")
@@ -92,6 +102,27 @@ AddEventHandler("tpz_medics:server:alert", function()
 		
 		TPZ.SendToDiscord(Config.Webhooks['ALERTS'].Url, title, message, Config.Webhooks['ALERTS'].Color)
 	end
+
+end)
+
+RegisterServerEvent("tpz_medics:server:sign_alert")
+AddEventHandler("tpz_medics:server:sign_alert", function(targetDate)
+    local _source   = source
+    local xPlayer   = TPZ.GetPlayer(_source)
+
+    local firstname = toProperCase(xPlayer.getFirstName())
+    local lastname   = toProperCase(xPlayer.getLastName())
+    local fullname   = firstname .. " " .. lastname
+
+    for index, archive in pairs(AlertArchives) do
+
+        if archive.date == targetDate then
+            archive.signed = fullname
+        end
+
+    end
+
+    TPZ.TriggerClientEventByJobs("tpz_medics:client:update_alerts", { actionType = "SET_SIGNED", data = { fullname, targetDate }, Config.Jobs) 
 
 end)
 
