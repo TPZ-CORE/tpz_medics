@@ -39,6 +39,9 @@ Config.MedicNPCData = {
     ReviveCost    = { account = 0, amount = 5 },
 }
 
+-- If you are using tpz_alerts script, set it to true. 
+Config.tpz_alerts = true
+
 -----------------------------------------------------------
 --[[ Usable Items  ]]--
 -----------------------------------------------------------
