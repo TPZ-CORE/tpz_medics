@@ -1,7 +1,6 @@
 local TPZ = exports.tpz_core:getCoreAPI()
 
-local Players      = {}
-local AlertArchives = {}
+local Players = {}
 
 -----------------------------------------------------------
 --[[ Functions  ]]--
@@ -22,7 +21,6 @@ AddEventHandler('onResourceStop', function(resourceName)
     end
 
     Players = nil
-    AlertArchives = nil
 end)
 
 -----------------------------------------------------------
