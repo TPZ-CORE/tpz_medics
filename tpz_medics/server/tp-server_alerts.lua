@@ -107,10 +107,10 @@ end)
 
 RegisterServerEvent("tpz_medics:server:sign_alert")
 AddEventHandler("tpz_medics:server:sign_alert", function(targetDate)
-    local _source   = source
-    local xPlayer   = TPZ.GetPlayer(_source)
+    local _source    = source
+    local xPlayer    = TPZ.GetPlayer(_source)
 
-    local firstname = toProperCase(xPlayer.getFirstName())
+    local firstname  = toProperCase(xPlayer.getFirstName())
     local lastname   = toProperCase(xPlayer.getLastName())
     local fullname   = firstname .. " " .. lastname
 
