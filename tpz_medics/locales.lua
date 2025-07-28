@@ -20,4 +20,7 @@ Locales = {
 
     ['NOT_REQUIRED_JOB']            = "~e~You don't have the required job.",
     ['UNCONSCIOUS_ALERT_DESC']      = "Please! I need medical assistance as fast as possible, i am not feeling very well.. i am getting unconcious!",
+    ["ALERT_TITLE"]                  = "Medical Department",
+    ["ALERT_DESCRIPTION"]            = "A player is unconscious! Checkout your map for finding where the alert came from.",
+
 }
