@@ -3,15 +3,6 @@ local TPZ = exports.tpz_core:getCoreAPI()
 local Players = {}
 
 -----------------------------------------------------------
---[[ Functions  ]]--
------------------------------------------------------------
-
-local function GetTableLength(T)
-    local count = 0
-    for _ in pairs(T) do count = count + 1 end
-    return count
-end
------------------------------------------------------------
 --[[ Base Events  ]]--
 -----------------------------------------------------------
 
@@ -128,7 +119,7 @@ Citizen.CreateThread(function()
 
     Wait(1000)
 
-    if GetTableLength(Players) > 0 then
+    if TPZ.GetTableLength(Players) > 0 then
 
       for index, player in pairs (Players) do
 
