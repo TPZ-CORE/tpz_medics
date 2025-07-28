@@ -59,7 +59,7 @@ AddEventHandler("tpz_medics:server:request_alerts", function()
 end)
 
 RegisterServerEvent("tpz_medics:server:alert")
-AddEventHandler("tpz_medics:server:alert", function(unconscious)
+AddEventHandler("tpz_medics:server:alert", function(unconscious, description)
     local _source = source
     local xPlayer = TPZ.GetPlayer(_source)
     
@@ -84,11 +84,12 @@ AddEventHandler("tpz_medics:server:alert", function(unconscious)
     local coords = GetEntityCoords(ped)
             
     local insert_data = { 
-        fullname = fullname,
-        source   = _source,
-        coords   = coords,
-        signed   = 0,
-        date     = formatted_date, 
+        fullname    = fullname,
+        source      = _source,
+        description = description,
+        coords      = coords,
+        signed      = 0,
+        date        = formatted_date, 
     } 
 
     table.insert(AlertArchives, insert_data)
@@ -98,7 +99,7 @@ AddEventHandler("tpz_medics:server:alert", function(unconscious)
 
     if Config.Webhooks['ALERTS'].Enabled then
 		local title   = "🚑`New Alert`"
-		local message = string.format("The player with the online player id: `%s` and fullname as: `%s` is sent an alert requesting for medical assistance.\n\n**Coordinates (X,Y,Z):** `%s`", _source, fullname, coords.x .. " " .. coords.y .. " " .. coords.z)
+		local message = string.format("The player with the online player id: `%s` and fullname as: `%s` is sent an alert requesting for medical assistance.\n\n**Description:** `%s`\n\n**Coordinates (X,Y,Z):** `%s`", _source, fullname, description, coords.x .. " " .. coords.y .. " " .. coords.z)
 		
 		TPZ.SendToDiscord(Config.Webhooks['ALERTS'].Url, title, message, Config.Webhooks['ALERTS'].Color)
 	end
