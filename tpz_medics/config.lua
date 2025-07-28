@@ -30,20 +30,31 @@ Config.NPCApplyDuration = {
 
 Config.CheckNearestPlayersForRevive = 1.5 -- The distance to check when using a revive item near players who are unconscious.
 
--- Would you let the players to alert medics anytime when they are alive? 
--- @param Command : The command name to be executed for alerting medics. 
--- @param Duration : Time in seconds (to execute command again - every 10 minutes by default).
-Config.CommandToAlert = { Enabled = true, Command = "alert", Duration = 600 }
-
 Config.NotifyAlertDuration = 5 -- Time in seconds. 
+
+-- Set @Enabled to true if you want the players to send alert notes through pigeons.
+-- If true, doctors will also be able to read the alerts anytime by a command.  
+Config.PigeonAlerts = { 
+    Enabled = true, 
+
+    -- The command to call a pigeon for sending an alert note. 
+    CommandToCall = "callpigeon", 
+    
+    -- The duration (in seconds) for sending an alert note again. 
+    Duration = 600,
+
+    -- A command based on @Config.Jobs for reading all the in-game alerts
+    -- that have been sent by a pigeon. you can also route and sign when 
+    -- assistance has been provided by a doctor. 
+    CommandToReadPigeonAlerts = "alerts",
+
+    -- The cost for purchasing a pigeon (only once).
+    PigeonCost = { item = false, account = "cash", amount = 50 },
+}
 
 -- The jobs to receive the alert notifications and alert archives
 -- either from command or when a player is unconsious. 
 Config.Jobs = { "medic" } 
-
--- A command based on @Config.Jobs for reading all the in-game alerts
--- route and also sign when help had been provided by a doctor. 
-Config.CommandToReadAlerts = "alerts"
 
 -----------------------------------------------------------
 --[[ Usable Items  ]]--
