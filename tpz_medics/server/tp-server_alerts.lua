@@ -43,30 +43,16 @@ AddEventHandler("tpz_medics:server:alert", function(unconscious)
         return
     end
 
-    local identifier          = xPlayer.getIdentifier()
-    local characterIdentifier = xPlayer.getCharacterIdentifier()
-    local fullname            = xPlayer.getFirstName() .. " " .. xPlayer.getLastName()
-    local steamName           = GetPlayerName(_source)
-
-    local ped                 = GetPlayerPed(_source)
-    local coords              = GetEntityCoords(ped)
-
-    if Config.tpz_alerts then
-
-        for index, job in pairs (Config.Jobs) do
-            exports.tpz_alerts:getAPI().createNewAlert(_source, job, Locales["UNCONSCIOUS_ALERT_DESC"])
-        end
-
-    end
+    local ped    = GetPlayerPed(_source)
+    local coords = GetEntityCoords(ped)
 
     -- update on jobs only (for blips)
     TPZ.TriggerClientEventByJobs("tpz_medics:client:alert", { coords }, Config.Jobs) 
 
-    -- tpz_notify
+    for index, job in pairs (Config.Jobs) do
 
-    if not Config.tpz_alerts then
+        if not Config.tpz_alerts then
 
-        for index, job in pairs (Config.Jobs) do
             local jobList = TPZ.GetJobPlayers(job)
     
             if jobList.count > 0 then
@@ -80,14 +66,22 @@ AddEventHandler("tpz_medics:server:alert", function(unconscious)
                 end
     
             end
-    
+
+        else
+            exports.tpz_alerts:getAPI().createNewAlert(_source, job, Locales["UNCONSCIOUS_ALERT_DESC"])
         end
 
     end
 
     if Config.Webhooks['ALERTS'].Enabled then
-		local title   = "🚑`New Alert`"
-		local message = string.format("The player with the online player id: `%s` and fullname as: `%s` is sent an alert requesting for medical assistance.\n\n**Description:** `%s`\n\n**Coordinates (X,Y,Z):** `%s`", _source, fullname, description, coords.x .. " " .. coords.y .. " " .. coords.z)
+
+        local identifier          = xPlayer.getIdentifier()
+        local characterIdentifier = xPlayer.getCharacterIdentifier()
+        local fullname            = xPlayer.getFirstName() .. " " .. xPlayer.getLastName()
+        local steamName           = GetPlayerName(_source)
+
+		local title               = "🚑`New Alert`"
+		local message            = string.format("The player with the online player id: `%s` and fullname as: `%s` is sent an alert requesting for medical assistance.\n\n**Coordinates (X,Y,Z):** `%s`", _source, fullname, coords.x .. " " .. coords.y .. " " .. coords.z)
 
 		TPZ.SendToDiscord(Config.Webhooks['ALERTS'].Url, title, message, Config.Webhooks['ALERTS'].Color)
 	end
