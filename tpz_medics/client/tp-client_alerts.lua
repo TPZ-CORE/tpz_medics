@@ -17,3 +17,30 @@ end)
 -----------------------------------------------------------
 --[[ Commands ]]--
 -----------------------------------------------------------
+
+RegisterCommand(Config.CommandToReadAlerts, function(source, args, rawCommand)
+    local PlayerData = GetPlayerData()
+
+    if not PlayerData.Loaded then
+        return
+    end
+
+    local isPermitted = false
+
+    for index, job in pairs (Config.Jobs) do
+
+        if job == PlayerData.Job then
+            isPermitted = true
+        end
+
+    end
+
+    if isPermitted then
+
+        OpenMedicalAlertArchives()
+
+    else
+        SendNotification(nil, Locales["NOT_REQUIRED_JOB"], "error")
+    end
+
+end)
