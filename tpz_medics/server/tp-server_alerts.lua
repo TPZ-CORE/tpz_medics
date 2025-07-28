@@ -89,7 +89,7 @@ AddEventHandler("tpz_medics:server:alert", function()
 
     if Config.Webhooks['ALERTS'].Enabled then
 		local title   = "🚑`New Unconsious Alert`"
-		local message = string.format("The player with the online player id: `%s` is unconsious and sent an alert asking for help.", _source)
+		local message = string.format("The player with the online player id: `%s` and fullname as: `%s` is unconsious and sent an alert requesting for medical assistance.", _source, fullname)
 		
 		TPZ.SendToDiscord(Config.Webhooks['ALERTS'].Url, title, message, Config.Webhooks['ALERTS'].Color)
 	end
