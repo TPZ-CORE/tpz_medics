@@ -19,8 +19,5 @@ Locales = {
     ['ACTION_ON_COOLDOWN']          = "You can't perform this action for another %s minute-s.",
 
     ['NOT_REQUIRED_JOB']            = "~e~You don't have the required job.",
-
-    ['ARCHIVE_ALERT_ALREADY_SIGNED'] = "The specified alert has been signed by someone else.",
-
-    ['UNCONSCIOUS_ALERT_DESCRIPTION']  = "",
+    ['UNCONSCIOUS_ALERT_DESC']      = "Please! I need medical assistance as fast as possible, i am not feeling very well.. i am getting unconcious!",
 }
