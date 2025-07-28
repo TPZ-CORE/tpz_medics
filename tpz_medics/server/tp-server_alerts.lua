@@ -13,3 +13,50 @@ AddEventHandler('onResourceStop', function(resourceName)
 
     AlertArchives = nil
 end)
+
+-----------------------------------------------------------
+--[[ General Events  ]]--
+-----------------------------------------------------------
+
+RegisterServerEvent("tpz_medics:server:alert")
+AddEventHandler("tpz_medics:server:alert", function()
+    local _source = source
+    local xPlayer = TPZ.GetPlayer(_source)
+    
+    if not xPlayer.loaded() then
+        return
+    end
+
+    local identifier          = xPlayer.getIdentifier()
+    local characterIdentifier = xPlayer.getCharacterIdentifier()
+    local fullname            = xPlayer.getFirstName() .. " " .. xPlayer.getLastName()
+    local steamName           = GetPlayerName(_source)
+
+    local currentTime = os.date("*t") -- Get current date and time as a table
+    -- Modify only the year
+    currentTime.year = Config.Year
+
+    -- Get the new timestamp with modified year
+    local modifiedTimestamp = os.time(currentTime)
+    local formatted_date    = os.date("%d/%m/%Y %H:%M:%S", modifiedTimestamp)
+
+    local ped               = GetPlayerPed(_source)
+    local playerCoords      = GetEntityCoords(ped)
+            
+    table.insert(AlertArchives, { 
+        fullname = fullname,
+        source   = _source,
+        coords   = playerCoords,
+        signed   = 0,
+        date     = formatted_date, 
+    } 
+
+    if Config.Webhooks['ALERTS'].Enabled then
+		local title   = "🚑`New Unconsious Alert`"
+		local message = string.format("The player with the online player id: `%s` is unconsious and sent an alert asking for help.", _source)
+		
+		TPZ.SendToDiscord(Config.Webhooks['ALERTS'].Url, title, message, Config.Webhooks['ALERTS'].Color)
+	end
+
+end)
+
