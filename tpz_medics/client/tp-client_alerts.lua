@@ -58,7 +58,7 @@ end)
 
 if Config.PigeonAlerts.Enabled then
 
-    RegisterCommand(Config.PigeonAlerts.CommandToReadAlerts, function(source, args, rawCommand)
+    RegisterCommand(Config.PigeonAlerts.CommandToReadPigeonAlerts, function(source, args, rawCommand)
         local PlayerData = GetPlayerData()
 
         if not PlayerData.Loaded then
