@@ -121,12 +121,15 @@ end)
 
 RegisterServerEvent("tpz_medics:server:alert")
 AddEventHandler("tpz_medics:server:alert", function()
-    local _source        = source
-    local xPlayer        = TPZ.GetPlayer(_source)
+    local _source = source
+    local xPlayer = TPZ.GetPlayer(_source)
+    local fullname = xPlayer.getFirstName() .. " " .. xPlayer.getLastName()
 
     if not xPlayer.loaded() then
         return
     end
+
+    
 
     -- todo
 
