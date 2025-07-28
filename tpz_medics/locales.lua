@@ -21,4 +21,6 @@ Locales = {
     ['NOT_REQUIRED_JOB']            = "~e~You don't have the required job.",
 
     ['ARCHIVE_ALERT_ALREADY_SIGNED'] = "The specified alert has been signed by someone else.",
+
+    ['UNCONSCIOUS_ALERT_DESCRIPTION']  = "",
 }
