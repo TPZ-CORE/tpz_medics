@@ -28,6 +28,8 @@ AddEventHandler("tpz_core:isPlayerReady", function()
         return
     end
 
+    TriggerServerEvent("tpz_medics:server:request_alerts")
+
     PlayerData.Job = data.job
     PlayerData.Loaded = true
 end)
@@ -43,6 +45,8 @@ if Config.DevMode then
         if data == nil then
             return
         end
+
+        TriggerServerEvent("tpz_medics:server:request_alerts")
     
         PlayerData.Job = data.job
         PlayerData.Loaded = true
