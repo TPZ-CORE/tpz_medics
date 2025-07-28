@@ -59,7 +59,7 @@ AddEventHandler("tpz_medics:server:request_alerts", function()
 end)
 
 RegisterServerEvent("tpz_medics:server:alert")
-AddEventHandler("tpz_medics:server:alert", function()
+AddEventHandler("tpz_medics:server:alert", function(unconscious)
     local _source = source
     local xPlayer = TPZ.GetPlayer(_source)
     
