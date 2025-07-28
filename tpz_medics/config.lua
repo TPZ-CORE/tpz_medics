@@ -26,16 +26,6 @@ Config.CheckNearestPlayersForRevive = 1.5 -- The distance to check when using a 
 -- @param Duration : Time in seconds. 
 Config.NotifyAlert = { Jobs = { "medic" }, Duration = 5 }
 
----------------------------------------------------------------
---[[ Discord Webhooking ]]--
----------------------------------------------------------------
-
-Config.DiscordWebhooking = {
-    Enable = false, 
-    Url    = "", 
-    Color  = 10038562
-}
-
 -----------------------------------------------------------
 --[[ Usable Items  ]]--
 -----------------------------------------------------------
@@ -299,3 +289,22 @@ function SendNotification(source, message)
     end
   
 end
+
+---------------------------------------------------------------
+--[[ Discord Webhooking ]]--
+---------------------------------------------------------------
+
+Config.Webhooks = {
+
+    ["ACTIONS"] = {
+        Enabled = false, 
+        Url    = "", 
+        Color  = 10038562
+    },
+
+    ["ALERTS"] = {
+        Enabled = false, 
+        Url    = "", 
+        Color  = 10038562
+    },
+}
