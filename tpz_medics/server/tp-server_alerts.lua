@@ -18,6 +18,36 @@ end)
 --[[ General Events  ]]--
 -----------------------------------------------------------
 
+RegisterServerEvent("tpz_medics:server:request_alerts")
+AddEventHandler("tpz_medics:server:request_alerts", function()
+    local _source = source
+    local xPlayer = TPZ.GetPlayer(_source)
+    
+    if not xPlayer.loaded() then
+        return
+    end
+
+    local currentJob = xPlayer.getJob()
+
+    local isPermitted = false
+
+    for index, job in pairs (Config.Jobs) do
+
+        if job == currentJob then
+
+            isPermitted = true
+        end
+
+    end
+
+    if not isPermitted then
+        return
+    end
+
+    TriggerClientEvent("tpz_medics:client:update_alerts", _source, { actionType = "REQUEST", data = AlertArchives })
+
+end)
+
 RegisterServerEvent("tpz_medics:server:alert")
 AddEventHandler("tpz_medics:server:alert", function()
     local _source = source
