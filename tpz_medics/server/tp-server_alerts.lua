@@ -73,13 +73,19 @@ AddEventHandler("tpz_medics:server:alert", function()
     local ped               = GetPlayerPed(_source)
     local playerCoords      = GetEntityCoords(ped)
             
-    table.insert(AlertArchives, { 
+    
+    local insert_data = { 
         fullname = fullname,
         source   = _source,
         coords   = playerCoords,
         signed   = 0,
         date     = formatted_date, 
     } 
+
+    table.insert(AlertArchives, insert_data)
+
+    -- update on jobs only. 
+    TPZ.TriggerClientEventByJobs("tpz_medics:client:update_alerts", { actionType = "INSERT", data = insert_data }, Config.Jobs) 
 
     if Config.Webhooks['ALERTS'].Enabled then
 		local title   = "🚑`New Unconsious Alert`"
