@@ -86,7 +86,7 @@ AddEventHandler("tpz_medics:server:alert", function(unconscious, description)
     if unconscious then
         description = Locales["UNCONSCIOUS_ALERT_DESCRIPTION"]
     end
-            
+
     local insert_data = { 
         fullname    = fullname,
         source      = _source,
@@ -96,7 +96,9 @@ AddEventHandler("tpz_medics:server:alert", function(unconscious, description)
         date        = formatted_date, 
     } 
 
-    table.insert(AlertArchives, insert_data)
+    if Config.PigeonAlerts.Enabled then
+        table.insert(AlertArchives, insert_data)
+    end
 
     -- update on jobs only. 
     TPZ.TriggerClientEventByJobs("tpz_medics:client:update_alerts", { actionType = "INSERT", data = insert_data }, Config.Jobs) 
