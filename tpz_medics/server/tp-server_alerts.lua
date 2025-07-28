@@ -61,7 +61,7 @@ AddEventHandler("tpz_medics:server:alert", function(unconscious)
     
                     player.source = tonumber(player.source)
     
-                    TriggerClientEvent("tpz_notify:sendNotification", Locales["ALERT_TITLE"], Locales["ALERT_DESCRIPTION"], "medical", "info", Config.AlertNotification, "left")
+                    TriggerClientEvent("tpz_notify:sendNotification", player.source, Locales["ALERT_TITLE"], Locales["ALERT_DESCRIPTION"], "medical", "info", Config.NotifyAlertDuration, "left")
     
                 end
     
