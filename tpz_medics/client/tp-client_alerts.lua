@@ -18,6 +18,8 @@ AddEventHandler("tpz_medics:client:update_alerts", function(cb)
         
         for index, archive in pairs (AlertArchives) do
 
+            -- @return data[1] : fullname of signed player.
+            -- @return data[2] : the target archive by its registration date. 
             if archive.date == data[2] then
                 archive.signed = data[1]
             end
