@@ -21,7 +21,8 @@ Config.NPCApplyDuration = {
 
 Config.CheckNearestPlayersForRevive = 1.5 -- The distance to check when using a revive item near players who are unconscious.
 
-Config.NotifyAlertDuration = 5 -- Time in seconds. 
+Config.NotifyAlertDuration = 20 -- Time in seconds. 
+Config.AlertBlipDisplayDuration = 60 -- Time in seconds (displaying a blip on the location where alert came from)
 
 -- The jobs to receive the alert notifications and also check for players availability. 
 Config.Jobs = { "medic" } 
