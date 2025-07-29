@@ -43,7 +43,7 @@ AddEventHandler("tpz_medics:server:alert", function(unconscious)
             end
 
         else
-            exports.tpz_alerts:getAPI().createNewAlert(_source, job, Locales["UNCONSCIOUS_ALERT_DESC"])
+            exports.tpz_alerts:createNewAlert(_source, job, Locales["UNCONSCIOUS_ALERT_DESC"])
         end
 
     end
