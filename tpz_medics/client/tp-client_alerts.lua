@@ -65,6 +65,7 @@ AddEventHandler("tpz_medics:client:start_npc_assistance", function(cb)
             if NPCData.duration > 60 then
                 RemoveEntityProperly(NPCData.entity, GetHashKey(model))
                 NPCData.duration = 0
+                NPCData.entity = nil
                 break
             end
 
