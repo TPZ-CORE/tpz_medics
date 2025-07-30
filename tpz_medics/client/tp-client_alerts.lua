@@ -143,7 +143,6 @@ end)
 RegisterNetEvent("tpz_medics:client:update_medical_entity_net")
 AddEventHandler("tpz_medics:client:update_medical_entity_net", function(netId)
 
-    print(netId)
     local entity = Citizen.InvokeNative(0xBFFEAB45A9A9094A, netId)
 		
 	if entity and DoesEntityExist(entity) then
