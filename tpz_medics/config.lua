@@ -40,7 +40,7 @@ Config.MedicNPCData = {
     ReviveCost    = { Account = 0, Amount = 0 },
 }
 
--- If you are using tp_pigeon_alertd script, set it to true. 
+-- If you are using tp_pigeon_alerts script, set it to true. 
 Config.tp_pigeon_alerts = false
 
 -----------------------------------------------------------
