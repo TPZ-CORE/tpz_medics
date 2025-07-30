@@ -1,5 +1,3 @@
-local Blips = {}
-
 local NPCData = { entity = nil, duration = 0, is_reviving = false }
 
 -----------------------------------------------------------
