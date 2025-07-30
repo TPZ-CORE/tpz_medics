@@ -35,6 +35,12 @@ end)
 RegisterNetEvent("tpz_medics:client:start_npc_assistance")
 AddEventHandler("tpz_medics:client:start_npc_assistance", function(cb)
     local playerPed = PlayerPedId()
+
+    if NPCData.entity then
+        -- in case the entity exists, we return. 
+        return
+    end
+
 	local coords    = GetEntityCoords(playerPed)
 	local model     = Config.MedicNPCData.Model
 	
