@@ -121,9 +121,9 @@ AddEventHandler("tpz_medics:client:start_npc_assistance", function(cb)
                 Wait(10000)
 
                 RemoveEntityProperly(NPCData.entity, GetHashKey(model))
-                NPCData.entity         = nil
-                NPCData.is_reviving    = false
-                NPCData.entityDuration = 0
+                NPCData.entity      = nil
+                NPCData.is_reviving = false
+                NPCData.duration    = 0
 
                 break
                 
