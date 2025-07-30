@@ -29,7 +29,7 @@ AddEventHandler("tpz_medics:server:alert", function(unconscious)
             availableMedics = true
         end
 
-        if not Config.tpz_alerts then
+        if not Config.tp_pigeon_alerts then
 
             if jobList.count > 0 then
 
@@ -43,7 +43,7 @@ AddEventHandler("tpz_medics:server:alert", function(unconscious)
             end
 
         else
-            exports.tpz_alerts:createNewAlert(_source, job, Locales["UNCONSCIOUS_ALERT_DESC"])
+            exports.tp_pigeon_alerts:createNewAlert(_source, job, Locales["UNCONSCIOUS_ALERT_DESC"])
         end
 
     end
