@@ -16,9 +16,6 @@ AddEventHandler("tpz_medics:server:alert", function(unconscious)
     local ped    = GetPlayerPed(_source)
     local coords = GetEntityCoords(ped)
 
-    -- update on jobs only (for blips)
-    TPZ.TriggerClientEventByJobs("tpz_medics:client:alert", { coords }, Config.Jobs) 
-
     local availableMedics = false
 
     for index, job in pairs (Config.Jobs) do
@@ -39,6 +36,9 @@ AddEventHandler("tpz_medics:server:alert", function(unconscious)
 
                     TriggerClientEvent("tpz_notify:sendNotification", player.source, Locales["ALERT_TITLE"], Locales["ALERT_DESCRIPTION"], "medical", "info", Config.NotifyAlertDuration, "left")
                 end
+
+                -- update on jobs only (for blips)
+                TPZ.TriggerClientEventByJobs("tpz_medics:client:alert", { coords }, Config.Jobs) 
 
             end
 
