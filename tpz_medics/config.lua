@@ -19,7 +19,8 @@ Config.NPCApplyDuration = {
     ['FULL']   = { ActionDuration = 10, Cooldown = 30 },
 }
 
-Config.CheckNearestPlayersForRevive = 1.5 -- The distance to check when using a revive item near players who are unconscious.
+-- The distance to check when using a revive item near players who are unconscious.
+Config.CheckNearestPlayersForRevive = 1.5
 
 Config.NotifyAlertDuration      = 20 -- Time in seconds. 
 Config.AlertBlipDisplayDuration = 60 -- Time in seconds (displaying a blip on the location where alert came from)
