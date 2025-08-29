@@ -93,6 +93,7 @@ AddEventHandler("tpz_medics:server:action", function(locationIndex, actionType)
   if not success then
     SendNotification(_source, Locales['NOT_ENOUGH_MONEY'])
     TriggerClientEvent("tpz_medics:client:setBusy", _source, false)
+    return
   end
 
   -- We perform the healing here instead of client.
