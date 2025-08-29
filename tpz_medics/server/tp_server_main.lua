@@ -56,7 +56,23 @@ AddEventHandler("tpz_medics:server:action", function(locationIndex, actionType)
     Players[charIdentifier]['FULL']   = { cooldown = 0, action = 'FULL'} -- FULL (REVIVE)
   end
 
-  xPlayer.removeAccount(0, cost)
+  if money >= cost then
+    xPlayer.removeAccount(0, cost)
+
+  elseif money < cost and Config.tp_banks then
+    local BankAPI = exports.tp_banks:getAPI()
+    local IBAN    = BankAPI.getPlayerIBAN(_source)
+    local account  = BankAPI.getAccountMoney(IBAN, "CASH")
+
+    if (not IBAN) or (IBAN and account < cost) then
+      SendNotification(_source, Locales['NOT_ENOUGH_MONEY'])
+      TriggerClientEvent("tpz_medics:client:setBusy", _source, false)
+      return
+    end
+
+    BankAPI.executeTransactionType(IBAN, "WITHDRAW", "CASH", cost)
+
+  end
 
   -- We perform the healing here instead of client.
   if actionType == 'WOUNDS' then
