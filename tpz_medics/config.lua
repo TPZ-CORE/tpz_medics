@@ -44,6 +44,10 @@ Config.MedicNPCData = {
 -- If you are using tp_pigeon_notes script, set it to true. 
 Config.tp_pigeon_notes = false
 
+-- TP Banks : In case the player does not have money to pay for revive
+-- it checks for a banking account to withdraw. 
+Config.tp_banks = false 
+
 -----------------------------------------------------------
 --[[ Usable Items  ]]--
 -----------------------------------------------------------
