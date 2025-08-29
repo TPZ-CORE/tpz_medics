@@ -69,13 +69,25 @@ AddEventHandler("tpz_medics:server:action", function(locationIndex, actionType)
     local account  = BankAPI.getAccountMoney(IBAN, "CASH")
 
     if (not IBAN) or (IBAN and account < cost) then
-      SendNotification(_source, Locales['NOT_ENOUGH_MONEY'])
-      TriggerClientEvent("tpz_medics:client:setBusy", _source, false)
-      return
+      success = false
+    else
+      BankAPI.executeTransactionType(IBAN, "WITHDRAW", "CASH", cost)
+      success = true
     end
 
-    BankAPI.executeTransactionType(IBAN, "WITHDRAW", "CASH", cost)
-    success = true
+  elseif money < cost and Config.tpz_banking then
+    local BankAPI = exports.tpz_banking:getAPI()
+
+    local IBAN    = BankAPI.getIBANBySource(_source)
+    local account  = BankAPI.getAccountMoney(IBAN, "CASH")
+
+    if (not IBAN) or (IBAN and account < cost) then
+      success = false
+    else
+      BankAPI.executeTransactionType(IBAN, "WITHDRAW", "CASH", cost)
+      success = true
+    end
+
   end
 
   if not success then
