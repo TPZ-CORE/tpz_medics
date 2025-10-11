@@ -1,184 +1,96 @@
 local TPZ = exports.tpz_core:getCoreAPI()
 
-local Players = {}
-
 -----------------------------------------------------------
---[[ Base Events  ]]--
+--[[ General Events ]]--
 -----------------------------------------------------------
 
-AddEventHandler('onResourceStop', function(resourceName)
-    if (GetCurrentResourceName() ~= resourceName) then
-      return
+RegisterServerEvent("tpz_medics:server:alert")
+AddEventHandler("tpz_medics:server:alert", function(unconscious)
+    local _source = source
+    local xPlayer = TPZ.GetPlayer(_source)
+    local currentJob  = xPlayer.getJob()
+
+    if not xPlayer.loaded() then
+        return
     end
 
-    Players = nil
-end)
+    local ped    = GetPlayerPed(_source)
+    local coords = GetEntityCoords(ped)
 
------------------------------------------------------------
---[[ Events  ]]--
------------------------------------------------------------
+    local availableMedics = false
 
-RegisterServerEvent("tpz_medics:server:action")
-AddEventHandler("tpz_medics:server:action", function(locationIndex, actionType)
-  local _source        = source
-  local xPlayer        = TPZ.GetPlayer(_source)
-  local charIdentifier = xPlayer.getCharacterIdentifier()
+    local isMedic, count = false, 0 
 
-  Wait(250, 500) -- safety wait.
+    for index, job in pairs (Config.Jobs) do
 
-  if Players[charIdentifier] and Players[charIdentifier][actionType] and Players[charIdentifier][actionType].cooldown ~= 0 then -- Cooldown
-    SendNotification(_source, string.format(Locales['ACTION_ON_COOLDOWN'], Players[charIdentifier][actionType]))
-    return
-  end
+        local jobList = TPZ.GetJobPlayers(job)
+        
+        if jobList.count > 0 then
+            availableMedics = true
+        
+            count = count + jobList.count
+        end
 
-  local ActionData = Config.Locations[locationIndex]
+        if job == currentJob then 
+            isMedic = true
+        end
 
-  local money     = xPlayer.getAccount(0)
-  local cost      = 0
+        if not Config.tp_pigeon_notes then
 
-  if actionType == 'FULL' then
-    cost = ActionData.ReviveCost
+            if jobList.count > 0 then
 
-  elseif actionType == 'WOUNDS' then
-    cost = ActionData.HealCost
-  end
-
-  if money < cost then
-    SendNotification(_source, Locales['NOT_ENOUGH_MONEY'])
-    TriggerClientEvent("tpz_medics:client:setBusy", _source, false)
-    return
-  end
-
-  if Players[charIdentifier] == nil then
-    Players[charIdentifier] = {}
-
-    Players[charIdentifier]['WOUNDS'] = { cooldown = 0, action = 'WOUNDS'} -- WOUNDS
-    Players[charIdentifier]['FULL']   = { cooldown = 0, action = 'FULL'} -- FULL (REVIVE)
-  end
-
-  local success = false
-
-  if money >= cost then
-    xPlayer.removeAccount(0, cost)
-
-    success = true
-
-  elseif money < cost and Config.tp_banks then
-    local BankAPI = exports.tp_banks:getAPI()
-    local IBAN    = BankAPI.getPlayerIBAN(_source)
-    local account  = BankAPI.getAccountMoney(IBAN, "CASH")
-
-    if (not IBAN) or (IBAN and account < cost) then
-      success = false
-    else
-      BankAPI.executeTransactionType(IBAN, "WITHDRAW", "CASH", cost)
-      success = true
-    end
-
-  elseif money < cost and Config.tpz_banking then
-    local BankAPI = exports.tpz_banking:getAPI()
-
-    local IBAN    = BankAPI.getIBANBySource(_source)
-    local account  = BankAPI.getAccountMoney(IBAN, "CASH")
-
-    if (not IBAN) or (IBAN and account < cost) then
-      success = false
-    else
-      BankAPI.executeTransactionType(IBAN, "WITHDRAW", "CASH", cost)
-      success = true
-    end
-
-  end
-
-  if not success then
-    SendNotification(_source, Locales['NOT_ENOUGH_MONEY'])
-    TriggerClientEvent("tpz_medics:client:setBusy", _source, false)
-    return
-  end
-
-  -- We perform the healing here instead of client.
-  if actionType == 'WOUNDS' then
-
-    TriggerClientEvent('tpz_core:healPlayer', _source)
-
-    -- tpz_metabolism.
-    TriggerClientEvent("tpz_metabolism:setMetabolismValue", _source, "HUNGER", "add", 100)
-    TriggerClientEvent("tpz_metabolism:setMetabolismValue", _source, "THIRST", "add", 100)
-
-    TriggerClientEvent("tpz_metabolism:setMetabolismValue", _source, "STRESS", "remove", 100)
-    TriggerClientEvent("tpz_metabolism:setMetabolismValue", _source, "ALCOHOL", "remove", 100)
-
+                for _, player in pairs (jobList.players) do
     
-    Players[charIdentifier][actionType].cooldown = Config.NPCApplyDuration[actionType].Cooldown
+                    player.source = tonumber(player.source)
 
-  end
-
-  TriggerClientEvent("tpz_medics:client:action", _source, locationIndex, actionType)
-
-end)
-
-RegisterServerEvent("tpz_medics:server:action_full")
-AddEventHandler("tpz_medics:server:action_full", function(id)
-  local _source        = source
-  local _tsource       = tonumber(id)
-
-  if id == nil then
-    _tsource = _source
-  end
-
-  local tPlayer        = TPZ.GetPlayer(_tsource)
-  local charIdentifier = tPlayer.getCharacterIdentifier()
-
-  if not tPlayer.loaded() then
-    return
-  end
-
-  if Players[charIdentifier] and Players[charIdentifier]['FULL'] and Players[charIdentifier]['FULL'].cooldown ~= 0 then -- Cooldown
-    if id ~= nil then
-      SendNotification(_source, string.format(Locales['TARGET_ACTION_ON_COOLDOWN'], Players[charIdentifier]['FULL']))
-    end
-
-    SendNotification(_tsource, string.format(Locales['ACTION_ON_COOLDOWN'], Players[charIdentifier]['FULL']))
-    return
-  end
-
-  Players[charIdentifier]['FULL'].cooldown = Config.NPCApplyDuration['FULL'].Cooldown
-
-  TriggerClientEvent('tpz_core:resurrectPlayer', _tsource, true)
-end)
-
------------------------------------------------------------
---[[ Threads  ]]--
------------------------------------------------------------
-
-Citizen.CreateThread(function()
-
-  while true do
-
-    Wait(1000)
-
-    if TPZ.GetTableLength(Players) > 0 then
-
-      for index, player in pairs (Players) do
-
-        for type, actionValue in pairs (player) do
-
-            if actionValue.cooldown > 0 then
-
-                actionValue.cooldown = actionValue.cooldown - 1
-
-                if actionValue.cooldown <= 0 then
-                    actionValue.cooldown = 0
+                    TriggerClientEvent("tpz_notify:sendNotification", player.source, Locales["ALERT_TITLE"], Locales["ALERT_DESCRIPTION"], "medical", "info", Config.NotifyAlertDuration, "left")
                 end
+
+                -- update on jobs only (for blips)
+                TPZ.TriggerClientEventByJobs("tpz_medics:client:alert", { coords }, Config.Jobs) 
 
             end
 
-          end
-
+        else
+            exports.tp_pigeon_notes:createNewAlert(_source, job, Locales["UNCONSCIOUS_ALERT_DESC"], 0)
         end
 
     end
 
-  end
+    -- If the one who alerted was a medic and was the only medic available, we set as false, in order for the 
+    -- npc to provide assistance, otherwise the medic will not be assisted without this.
+    if count == 1 and isMedic then 
+        availableMedics = false
+    end
 
+    if not availableMedics and Config.MedicNPCData.Enabled then
+        -- spawn npc
+        TriggerClientEvent("tpz_medics:client:start_npc_assistance", _source)
+
+        if Config.MedicNPCData.ReviveCost.Amount > 0 then
+            xPlayer.removeAccount(Config.MedicNPCData.ReviveCost.Account, Config.MedicNPCData.ReviveCost.Amount)
+        end
+        
+    end
+
+    if Config.Webhooks['ALERTS'].Enabled then
+
+        local identifier          = xPlayer.getIdentifier()
+        local characterIdentifier = xPlayer.getCharacterIdentifier()
+        local fullname            = xPlayer.getFirstName() .. " " .. xPlayer.getLastName()
+        local steamName           = GetPlayerName(_source)
+
+		local title               = "🚑`New Alert`"
+		local message             = string.format("The player with the online player id: `%s` and fullname as: `%s` is sent an alert requesting for medical assistance.\n\n**Coordinates (X,Y,Z):** `%s`", _source, fullname, coords.x .. " " .. coords.y .. " " .. coords.z)
+       
+		TPZ.SendToDiscord(Config.Webhooks['ALERTS'].Url, title, message, Config.Webhooks['ALERTS'].Color)
+	end
+
+end)
+
+
+RegisterServerEvent("tpz_medics:server:send_medical_entity_net")
+AddEventHandler("tpz_medics:server:send_medical_entity_net", function(coords, netId)
+    coords = vector3(coords.x, coords.y, coords.z)
+    TPZ.TriggerClientEventToCoordsOnly("tpz_medics:client:update_medical_entity_net", netId, coords, 150.0)
 end)
