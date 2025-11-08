@@ -60,6 +60,29 @@ Citizen.CreateThread(function ()
 
 	end
 
+	if Config.SnakePoisons.Enabled then 
+
+		TPZInv.registerUsableItem(Config.SnakePoisons.AntiPoisonItem, GetCurrentResourceName(), function(data)
+			local _source        = data.source
+			local xPlayer        = TPZ.GetPlayer(_source)
+			local charIdentifier = xPlayer.getCharacterIdentifier()
+
+			local PoisonedPlayers = GetPoisonedPlayers()
+
+			if PoisonedPlayers[charIdentifier] == 1 then
+				
+				TriggerClientEvent('tpz_medics:client:use_antipoison', _source )
+				xPlayer.removeItem(Config.SnakePoisons.AntiPoisonItem, 1)
+				TPZInv.closeInventory(_source)
+
+			else
+				SendNotification(_source, Locales['NOT_POISONED'])
+			end
+
+		end)
+
+	end
+
 	
 end)
 
