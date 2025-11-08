@@ -41,6 +41,36 @@ Config.MedicNPCData = {
     ReviveCost    = { Account = 0, Amount = 0 },
 }
 
+Config.SnakePoisons = {
+    Enabled        = true,
+
+    AntiPoisonItem = 'antipoison',
+
+    DamageValue    = 15,
+    DamageEvery    = 10, -- time in seconds
+    LethalDamage   = true, 
+
+    PlayAnimation  = { 
+        enabled = true, 
+        
+        dict = "amb_wander@upperbody_idles@sick@both_arms@male_a@idle_a", 
+        name = "idle_c",
+        blendInSpeed = 5.0, 
+        blendOutSpeed = 5.0, 
+        duration = -1, 
+        flag = 31, 
+        playBackRate = 0, 
+    },
+
+    ScreenEffect      = 'DEADEYE', -- SET @ScreenEffect to false to disable.
+
+    -- How many seconds should the effect be cleared before adding again?
+    ScreenEffectStop  = 10, -- time in seconds
+
+    -- How many seconds for the effect to be added after cleared?
+    ScreenEffectEvery = 40, -- time in seconds
+}
+
 -- If you are using tp_pigeon_notes script, set it to true. 
 Config.tp_pigeon_notes = false
 
@@ -333,4 +363,5 @@ Config.Webhooks = {
         Url    = "", 
         Color  = 10038562
     },
+
 }
