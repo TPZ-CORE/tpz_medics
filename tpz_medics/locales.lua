@@ -24,5 +24,6 @@ Locales = {
     ["ALERT_DESCRIPTION"]            = "A player is unconscious! Checkout your map for finding where the alert came from.",
 
     ['NPC_APPLYING_SYRINGE']         = "Applying syringe..",
-
+    ['NOT_POISONED']                 = "~e~You are not poisoned by any snake.",
 }
+
