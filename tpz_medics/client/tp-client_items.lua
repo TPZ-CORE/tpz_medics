@@ -4,6 +4,38 @@ local TPZ = exports.tpz_core:getCoreAPI()
 --[[ Events ]]--
 -----------------------------------------------------------
 
+RegisterNetEvent('tpz_medics:client:use_antipoison')
+AddEventHandler('tpz_medics:client:use_antipoison', function(itemName)
+	local player = PlayerPedId()
+	local coords = GetEntityCoords(player)
+
+    LoadModel('s_rc_poisonedwater01x')
+
+    local prop      = CreateObject(GetHashKey('s_rc_poisonedwater01x'), coords.x, coords.y, coords.z + 0.2, true, true, false, false, true)
+    local boneIndex = GetEntityBoneIndexByName(player, 'MH_L_HandSide')
+
+    local anim_data = { 
+        dict = "mech_inventory@item@fallbacks@large_drink@left_handed", 
+        name = "use_quick_left_hand", 
+        blendInSpeed = 1.0, 
+        blendOutSpeed = 1.0, 
+        duration = -1, 
+        flag = 24, 
+        playbackRate = 0 
+    }
+
+    exports.tpz_core:getCoreAPI().PlayAnimation(player, anim_data)
+
+    AttachEntityToEntity(prop, player, boneIndex, 0.03, -0.01, -0.03, 20.0, -0.0, 0.0, true, true, false, true, 1, true)
+
+    TriggerServerEvent("tpz_medics:server:set_poisoned_state", nil, false)
+
+    Wait(5000)
+
+    RemoveEntityProperly(prop, GetHashKey('s_rc_poisonedwater01x') )
+    ClearPedSecondaryTask(player)
+end)
+
 RegisterNetEvent('tpz_medics:client:use')
 AddEventHandler('tpz_medics:client:use', function(itemName)
     local player = PlayerPedId()
