@@ -17,6 +17,10 @@ function GetPlayerData()
     return PlayerData
 end
 
+exports('IsPlayerPoisoned', function()
+    return PlayerData.IsPoisoned
+end)
+
 -----------------------------------------------------------
 --[[ Base Events & Threads ]]--
 -----------------------------------------------------------
