@@ -23,3 +23,9 @@
 -- @param state (Boolean) : Requires the set state (true = add poison, false = remove poison).
 TriggerEvent("tpz_medics:server:set_poisoned_state", source, state) -- the event is server side, the trigger is by default from server > server.
 ```
+
+- Use this export to get the state if player is poisoned / not. 
+
+```lua
+local isPoisoned = exports.tpz_medics:IsPlayerPoisoned()
+```
