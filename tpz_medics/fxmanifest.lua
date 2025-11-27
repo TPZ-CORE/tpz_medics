@@ -8,7 +8,7 @@ version '1.0.3'
 
 shared_scripts { 'config.lua', 'locales.lua' }
 server_scripts { 'server/*.lua' }
-client_scripts { 'client/*.lua' }
+client_scripts { '@tpz_core/client/modules/dataview/client.lua', 'client/*.lua' }
 
 dependencies {
     'tpz_core',
@@ -17,4 +17,5 @@ dependencies {
 }
 
 lua54 'yes'
+
 
