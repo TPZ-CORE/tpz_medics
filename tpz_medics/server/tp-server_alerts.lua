@@ -55,10 +55,6 @@ AddEventHandler("tpz_medics:server:alert", function(unconscious)
 
     end
 
-    if Config.tp_bird_notes then 
-        exports.tp_bird_notes:createNewAlert(_source, Config.Jobs, Locales["UNCONSCIOUS_ALERT_DESC"], 0)
-    end
-
     -- If the one who alerted was a medic and was the only medic available, we set as false, in order for the 
     -- npc to provide assistance, otherwise the medic will not be assisted without this.
     if count == 1 and isMedic then 
@@ -73,6 +69,10 @@ AddEventHandler("tpz_medics:server:alert", function(unconscious)
             xPlayer.removeAccount(Config.MedicNPCData.ReviveCost.Account, Config.MedicNPCData.ReviveCost.Amount)
         end
         
+    end
+
+    if availableMedics and Config.tp_bird_notes then 
+        exports.tp_bird_notes:createNewAlert(_source, Config.Jobs, Locales["UNCONSCIOUS_ALERT_DESC"], 0)
     end
 
     if Config.Webhooks['ALERTS'].Enabled then
@@ -96,11 +96,5 @@ AddEventHandler("tpz_medics:server:send_medical_entity_net", function(coords, ne
     TPZ.TriggerClientEventToCoordsOnly("tpz_medics:client:update_medical_entity_net", netId, coords, 150.0)
 end)
 
-
-RegisterServerEvent("tpz_medics:server:send_medical_entity_net")
-AddEventHandler("tpz_medics:server:send_medical_entity_net", function(coords, netId)
-    coords = vector3(coords.x, coords.y, coords.z)
-    TPZ.TriggerClientEventToCoordsOnly("tpz_medics:client:update_medical_entity_net", netId, coords, 150.0)
-end)
 
 
