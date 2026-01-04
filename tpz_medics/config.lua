@@ -71,8 +71,8 @@ Config.SnakePoisons = {
     ScreenEffectEvery = 40, -- time in seconds
 }
 
--- If you are using tp_pigeon_notes script, set it to true. 
-Config.tp_pigeon_notes = false
+-- If you are using Titans Productions tp_bird_notes paid script, set it to true. 
+Config.tp_bird_notes = true
 
 -- TP Banks (PAID SCRIPT) : In case the player does not have money to pay for revive
 -- it checks for a banking account to withdraw. 
@@ -364,4 +364,5 @@ Config.Webhooks = {
     },
 
 }
+
 
