@@ -350,18 +350,18 @@ end
 --[[ Discord Webhooking ]]--
 ---------------------------------------------------------------
 
+-- (!) Checkout tpz_core/server/discord/webhooks.lua to modify the webhook urls.
 Config.Webhooks = {
 
     ["ACTIONS"] = {
         Enabled = false, 
-        Url    = "", 
         Color  = 10038562
     },
 
     ["ALERTS"] = { -- You can use a webhook which allows your medics to see the alerts from discord. 
         Enabled = false, 
-        Url    = "", 
         Color  = 10038562
     },
 
 }
+
