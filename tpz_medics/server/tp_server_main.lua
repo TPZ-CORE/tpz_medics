@@ -148,8 +148,8 @@ AddEventHandler("tpz_medics:server:alert", function(unconscious)
 
 		local title               = "🚑`New Alert`"
 		local message             = string.format("The player with the online player id: `%s` and fullname as: `%s` is sent an alert requesting for medical assistance.\n\n**Coordinates (X,Y,Z):** `%s`", _source, fullname, coords.x .. " " .. coords.y .. " " .. coords.z)
-       
-		TPZ.SendToDiscord(Config.Webhooks['ALERTS'].Url, title, message, Config.Webhooks['ALERTS'].Color)
+        local url                 = TPZ.GetWebhookUrl('tpz_medics', 'ALERTS')
+		TPZ.SendToDiscord(url, title, message, Config.Webhooks['ALERTS'].Color)
 	end
 
 end)
@@ -160,4 +160,5 @@ AddEventHandler("tpz_medics:server:send_medical_entity_net", function(coords, ne
     coords = vector3(coords.x, coords.y, coords.z)
     TPZ.TriggerClientEventToCoordsOnly("tpz_medics:client:update_medical_entity_net", netId, coords, 150.0)
 end)
+
 
