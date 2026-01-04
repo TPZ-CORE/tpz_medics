@@ -90,11 +90,3 @@ AddEventHandler("tpz_medics:server:alert", function(unconscious)
 
 end)
 
-RegisterServerEvent("tpz_medics:server:send_medical_entity_net")
-AddEventHandler("tpz_medics:server:send_medical_entity_net", function(coords, netId)
-    coords = vector3(coords.x, coords.y, coords.z)
-    TPZ.TriggerClientEventToCoordsOnly("tpz_medics:client:update_medical_entity_net", netId, coords, 150.0)
-end)
-
-
-
