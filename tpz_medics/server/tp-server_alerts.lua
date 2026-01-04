@@ -8,7 +8,8 @@ RegisterServerEvent("tpz_medics:server:alert")
 AddEventHandler("tpz_medics:server:alert", function(unconscious)
     local _source = source
     local xPlayer = TPZ.GetPlayer(_source)
-    
+    local currentJob  = xPlayer.getJob()
+
     if not xPlayer.loaded() then
         return
     end
@@ -18,15 +19,23 @@ AddEventHandler("tpz_medics:server:alert", function(unconscious)
 
     local availableMedics = false
 
+    local isMedic, count = false, 0 
+
     for index, job in pairs (Config.Jobs) do
 
         local jobList = TPZ.GetJobPlayers(job)
         
         if jobList.count > 0 then
             availableMedics = true
+        
+            count = count + jobList.count
         end
 
-        if not Config.tp_pigeon_notes then
+        if job == currentJob then 
+            isMedic = true
+        end
+
+        if not Config.tp_bird_notes then
 
             if jobList.count > 0 then
 
@@ -42,10 +51,18 @@ AddEventHandler("tpz_medics:server:alert", function(unconscious)
 
             end
 
-        else
-            exports.tp_pigeon_notes:createNewAlert(_source, job, Locales["UNCONSCIOUS_ALERT_DESC"])
         end
 
+    end
+
+    if Config.tp_bird_notes then 
+        exports.tp_bird_notes:createNewAlert(_source, Config.Jobs, Locales["UNCONSCIOUS_ALERT_DESC"], 0)
+    end
+
+    -- If the one who alerted was a medic and was the only medic available, we set as false, in order for the 
+    -- npc to provide assistance, otherwise the medic will not be assisted without this.
+    if count == 1 and isMedic then 
+        availableMedics = false
     end
 
     if not availableMedics and Config.MedicNPCData.Enabled then
@@ -67,10 +84,16 @@ AddEventHandler("tpz_medics:server:alert", function(unconscious)
 
 		local title               = "🚑`New Alert`"
 		local message             = string.format("The player with the online player id: `%s` and fullname as: `%s` is sent an alert requesting for medical assistance.\n\n**Coordinates (X,Y,Z):** `%s`", _source, fullname, coords.x .. " " .. coords.y .. " " .. coords.z)
-        local url                 = TPZ.GetWebhookUrl('tpz_medics', 'ALERTS')
+        local url = TPZ.GetWebhookUrl('tpz_medics', 'ALERTS')
 		TPZ.SendToDiscord(url, title, message, Config.Webhooks['ALERTS'].Color)
 	end
 
+end)
+
+RegisterServerEvent("tpz_medics:server:send_medical_entity_net")
+AddEventHandler("tpz_medics:server:send_medical_entity_net", function(coords, netId)
+    coords = vector3(coords.x, coords.y, coords.z)
+    TPZ.TriggerClientEventToCoordsOnly("tpz_medics:client:update_medical_entity_net", netId, coords, 150.0)
 end)
 
 
@@ -79,4 +102,5 @@ AddEventHandler("tpz_medics:server:send_medical_entity_net", function(coords, ne
     coords = vector3(coords.x, coords.y, coords.z)
     TPZ.TriggerClientEventToCoordsOnly("tpz_medics:client:update_medical_entity_net", netId, coords, 150.0)
 end)
+
 
